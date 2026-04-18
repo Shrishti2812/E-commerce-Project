@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Cart from './pages/Cart'
 import Contact from './pages/Contact';
 import About from './pages/About';
+import Checkout from './pages/Checkout';
 function App() {
  
 
@@ -17,6 +18,7 @@ function App() {
 <Route path='/cart' element={<Cart/>}/>
 <Route path='/about' element={<About/>}/>
 <Route path='/contact' element={<Contact/>}/>
+<Route path='/checkout' element={<Checkout/>}/>
     </Routes>
 
  </>

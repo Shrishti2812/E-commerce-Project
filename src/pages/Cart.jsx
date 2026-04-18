@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { CartContext, CartProvider } from "../context/CartContext";
 import CartItem from "../components/CartItem";
+import { Link } from "react-router-dom";
 function Cart(){
 const {cartItems}=useContext(CartContext)
 if(!cartItems || cartItems.length ===0){
@@ -22,7 +23,7 @@ return(
     Delivery Charge: {"$1"}
     Final Price: {(total+cartItems.length).toFixed(3)};
  
-    
+     <Link to="/checkout" ><button className="bg-blue-500 text-white p-2 rounded-lg mt-4">Checkout</button></Link>
 </div>
  </div>
  

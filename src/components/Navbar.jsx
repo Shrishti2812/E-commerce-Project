@@ -5,7 +5,7 @@ function Navbar(){
    const{cartItems}=useContext(CartContext);
     return(
         <>
-        <nav className="flex justify-around items-center bg-gray-500 p-4 ">
+        <nav className="flex justify-around items-center bg-gray-500 p-4 mx-auto max-w-8xl">
           {/*logo*/}
 <div className="w-32 h-12" ><img src="https://pbs.twimg.com/media/EbavmWRWAAA3t7d.jpg" alt="Logo" className="text-xl text-white w-32 h-full object-cover" /> </div>
 {/*search bar*/}

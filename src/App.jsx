@@ -9,12 +9,13 @@ import About from './pages/About';
 import Checkout from './pages/Checkout';
 function App() {
  
-
+const [searchTerm,setSearchTerm]=useState("");
+  
   return (
     <>
-    <Navbar/>
+    <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
     <Routes>
-<Route path='/' element={<Home/>}/>
+<Route path='/' element={<Home searchTerm={searchTerm}/>}/>
 <Route path='/cart' element={<Cart/>}/>
 <Route path='/about' element={<About/>}/>
 <Route path='/contact' element={<Contact/>}/>

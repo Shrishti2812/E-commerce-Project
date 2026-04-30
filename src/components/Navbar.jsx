@@ -1,9 +1,10 @@
 import { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
-function Navbar(){
+function Navbar({searchTerm,setSearchTerm}){
    const{cartItems}=useContext(CartContext);
    const [isOpen,setIsOpen]=useState(false);
+   
        return(
         <>
         <nav className="flex justify-around items-center bg-gray-500 p-4 mx-auto w-full">
@@ -17,7 +18,11 @@ function Navbar(){
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 md:size-5 ml-1 md:ml-2 text-gray-500 flex-shrink-0">
     <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
   </svg>
-  <input className="flex-1 min-w-0 p-1.5 md:p-2.5 text-sm rounded-lg outline-none text-black" placeholder="search" />
+  <input className="flex-1 min-w-0 p-1.5 md:p-2.5 text-sm rounded-lg outline-none text-black" 
+  placeholder="search" 
+  value={searchTerm}
+  onChange={(e)=>setSearchTerm(e.target.value)}
+  />
 </div>
 <div className="hidden md:flex md:justify-between md:items-center gap-4 lg:gap-10">
 <Link className="flex justify-content items-center p-1 text-white text-base md:text-xl" to="/">Home</Link>

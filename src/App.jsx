@@ -10,12 +10,13 @@ import Checkout from './pages/Checkout';
 function App() {
  
 const [searchTerm,setSearchTerm]=useState("");
+const [category,setCategory]=useState("all");
   
   return (
     <>
-    <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+    <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} category={category} setCategory={setCategory}/>
     <Routes>
-<Route path='/' element={<Home searchTerm={searchTerm}/>}/>
+<Route path='/' element={<Home searchTerm={searchTerm} category={category} setCategory={setCategory} />}/>
 <Route path='/cart' element={<Cart/>}/>
 <Route path='/about' element={<About/>}/>
 <Route path='/contact' element={<Contact/>}/>

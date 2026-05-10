@@ -3,18 +3,27 @@ import Card from "../components/Card";
 
  
 
-function Home({searchTerm}){
+function Home({searchTerm, category, setCategory}){
     const [products,setProducts]=useState([]);
- const filterItems=searchTerm?products.filter((item)=>
-  item.title.toLowerCase().includes(searchTerm.toLowerCase()
-  || item.description.toLowerCase().includes(searchTerm.toLowerCase())
-  )): products;
+     const Categories=["all",...new Set(products.map((item)=>item.category ))];
+  console.log(Categories);
+ const filterItems= products.filter((item)=>{
+const search =searchTerm.trim().toLowerCase()||" ";
+  const matchSearch=item.title.toLowerCase().includes(search.toLowerCase())
+  || item.description.toLowerCase().includes(search.toLowerCase())
+  
+
+  const matchCategory=category==="all"|| item.category ===category ;
+  return matchSearch && matchCategory;
+});
+  
+ 
     async function fetchData() {
   try {
     const response = await fetch('https://dummyjson.com/products');
     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const data = await response.json();
-    console.log(data);
+   
     setProducts(data.products);
   } catch (error) {
     console.error('Error:', error);
@@ -23,9 +32,19 @@ function Home({searchTerm}){
  useEffect(()=>{
 fetchData();
     },[]);
+
+
     return(
-        <>
+        <> <div className="flex flex-wrap justify-around gap-2 bg-gray-400 p-2 rounded-md overflow-x-auto 
+        whitespace-nowrap py-3">
+           { Categories.map(category => (
+            <button className="text-white text-sm md:text-lg" key={category} onClick={()=>setCategory(category)}>
+              {category}
+            </button>
+           ))}
+          </div>
         <div className="mx-auto bg-blue-200 p-4">
+         
             <h2 className="p-2 text-3xl">Product Gallery</h2>
 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 p-4">
   {filterItems.length > 0 ? ( 
@@ -41,6 +60,7 @@ fetchData();
       Loading...
     </p>
   )}
+ 
 </div>
         </div>
         </>

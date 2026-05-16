@@ -10,8 +10,7 @@ function Home({searchTerm, category, setCategory}){
  const filterItems= products.filter((item)=>{
 const search =searchTerm.trim().toLowerCase()||" ";
   const matchSearch=item.title.toLowerCase().includes(search.toLowerCase())
-  || item.description.toLowerCase().includes(search.toLowerCase())
-  
+  || item.description.toLowerCase().includes(search.toLowerCase())  
 
   const matchCategory=category==="all"|| item.category ===category ;
   return matchSearch && matchCategory;
@@ -23,7 +22,7 @@ const search =searchTerm.trim().toLowerCase()||" ";
     const response = await fetch('https://dummyjson.com/products');
     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         const data = await response.json();
-   
+   console.log(data);
     setProducts(data.products);
   } catch (error) {
     console.error('Error:', error);

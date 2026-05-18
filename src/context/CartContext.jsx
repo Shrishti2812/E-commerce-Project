@@ -5,24 +5,32 @@ export const CartContext=createContext( );
 export function CartProvider({children}){
     const [cartItems,setCartItems]=useState([]);
 
-       useEffect(()=>{
-        console.log("updated cart",cartItems)
-    },[cartItems])
+   useEffect(() => {
+    try {
+        const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+        setCartItems(savedCart);
+    } catch (error) {
+        console.error("Invalid cart data in localStorage");
+        setCartItems([]);
+    }
+}, []);
 
   const addToCart=(product)=>{
         const existingitems=cartItems.find((item)=> item.id===product.id);
-    if(existingitems){
-setCartItems(
-    cartItems.map((item)=> 
+        let updatedCart;
+    if(existingitems){ 
+   updatedCart= cartItems.map((item)=> 
         item.id===product.id?
-    {...item,quantity:item.quantity+1} : item));
+    {...item,quantity:item.quantity+1} : item);
  
         }else{
-setCartItems([
+ updatedCart=[
     ...cartItems,
     {...product,quantity:1}
-]);
+];
  }
+ setCartItems(updatedCart);
+ localStorage.setItem("cart",JSON.stringify(updatedCart));
 }
 
  const increaseQuantity=(id)=>{
@@ -38,9 +46,9 @@ setCartItems([
 }
 
 const removeFromCart=(id)=>{
-      setCartItems(prev=>
-        prev.filter(item=> item.id!==id)
-      )
+      const updatedCart=cartItems.filter(item=> item.id!==id);
+      setCartItems(updatedCart);
+      localStorage.setItem("cart",JSON.stringify(updatedCart));
 }
 
 

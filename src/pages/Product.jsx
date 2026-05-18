@@ -1,8 +1,11 @@
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
 function Product(){
         const {id}=useParams();
 const [singleProduct,setSingleProduct]=useState({});
+const {addToCart}=useContext(CartContext);
  const roundedRating = Math.round(singleProduct.rating);
     async function fetchData() {
   try {
@@ -24,8 +27,8 @@ fetchData();
 
        <>
       <div className="max-w-7xl mx-auto p-4 md:p-8">
-        <div className="flex flex-col md:flex-row gap-8">
-          <div className="w-full md:w-1/2 p-3 flex justify-center items-center">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-8">
+          <div className="w-full md:w-1/2  flex justify-center items-center bg-gray-100 rounded-lg">
             <img  className="w-full max-w-md h-[300px] md:h-[500px] object-contain rounded-lg"
  src={singleProduct.thumbnail} alt={singleProduct.title}  />
           </div>
@@ -53,8 +56,13 @@ fetchData();
 </div>
     <h3 className="text-sm font-semibold">Price: ${singleProduct.price}</h3>
     <span className="text-gray-600 leading-relaxed">{singleProduct.discountPercentage}% off</span>
-    <div className="flex gap-4 mt-4">
-      <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">Add to Cart</button>
+    <div className="flex gap-2 md:gap-4 mt-4">
+      <button 
+        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+        onClick={() => addToCart(singleProduct)}
+      >
+        Add to Cart
+      </button>
       <button className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition">Buy Now</button>
     </div>
   

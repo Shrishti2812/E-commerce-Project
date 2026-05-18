@@ -8,6 +8,7 @@ if(!cartItems || cartItems.length===0){
     return <div> Cart is Empty</div>
 }
  const total=cartItems.reduce((acc,item)=>acc+item.price * item.quantity,0);
+ 
 return(
     <>
     <h1 className="text-2xl p-2">Your cart :</h1>

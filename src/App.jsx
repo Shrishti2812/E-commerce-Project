@@ -8,6 +8,7 @@ import Contact from './pages/Contact';
 import About from './pages/About';
 import Checkout from './pages/Checkout';
 import Product from './pages/Product';
+import Wishlist from './pages/Wishlist';
 function App() {
  
 const [searchTerm,setSearchTerm]=useState("");
@@ -22,6 +23,7 @@ const [category,setCategory]=useState("all");
 <Route path='/about' element={<About/>}/>
 <Route path='/product/:id' element={<Product/>}/>
 <Route path='/contact' element={<Contact/>}/>
+<Route path='/wishlist' element={<Wishlist/>}/>
 <Route path='/checkout' element={<Checkout/>}/>
     </Routes>
 

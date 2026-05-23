@@ -4,7 +4,13 @@ export const CartContext = createContext();
 
 export function CartProvider({ children }) {
     const [cartItems, setCartItems] = useState([]);
-    const [wishlist, setWishlist] = useState([]);
+    const [wishlist, setWishlist] = useState(()=>{
+     const savedWishList=localStorage.getItem("wishlist");
+     return savedWishList ? JSON.parse(savedWishList) : [];   
+    });
+    useEffect(()=>{
+        localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    }, [wishlist]);
     useEffect(() => {
         try {
             const savedCart = JSON.parse(localStorage.getItem("cart")) || [];

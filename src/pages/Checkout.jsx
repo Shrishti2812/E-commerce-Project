@@ -4,17 +4,18 @@ import{Link} from "react-router-dom";
         import CartItem from "../components/CartItem";
 function Checkout(){
 
-    const {cartItems}=useContext(CartContext);
-    const total=cartItems.reduce((acc,item)=>acc+item.price * item.quantity,0);
+    const {cartItems, buyNowItem}=useContext(CartContext);
+    const checkoutItems=buyNowItem ? [buyNowItem] : cartItems;
+    const total=checkoutItems.reduce((acc,item)=>acc+item.price * (item.quantity||1),0);
     return (
         <>
-       <div className="min-h-screen bg-gray-100 ">
-  <div className="flex  flex-col md:flex-row gap-10 max-w-6xl mx-auto p-6">
+       <div className="min-h-screen bg-gray-100 text-slate-900 ">
+  <div className="flex  flex-col md:flex-row gap-10 max-w-6xl mx-auto p-6 text-slate-900">
 
     {/* Checkout Form */}
-    <form className="w-full md:w-1/2 p-8 rounded-xl bg-white border border-gray-200">
+    <form className="w-full md:w-1/2 p-8 rounded-xl bg-white border border-gray-200 text-slate-900">
 
-      <h2 className="text-2xl font-semibold mb-6">
+      <h2 className="text-2xl font-semibold mb-6 text-slate-900">
         Shipping Details
       </h2>
 
@@ -48,7 +49,7 @@ function Checkout(){
       />
 
    
- <h3 className="text-xl font-semibold mb-4">Payment Method</h3>
+ <h3 className="text-xl font-semibold mb-4 text-slate-900">Payment Method</h3>
 
       <div className="flex justify-between mb-6">
         <label className="flex items-center gap-3">
@@ -67,17 +68,17 @@ function Checkout(){
     </form>
 
     {/* Cart Section */}
-   <div className="w-full md:w-[40%] bg-white rounded-2xl border border-gray-200 p-4 space-y-6">
-  <h2 className="text-2xl font-bold">Order Summary</h2>
+   <div className="w-full md:w-[40%] bg-white rounded-2xl border border-gray-200 p-4 space-y-6 text-slate-900">
+  <h2 className="text-2xl font-bold text-slate-900">Order Summary</h2>
  
   {/* Cart Items */}
-  <div className="border border-gray-200 rounded-xl p-4">
-    <h3 className="text-lg font-semibold mb-2">
-      Cart Items ({cartItems.length})
+<div className="border border-gray-200 rounded-xl p-4 text-slate-900">
+    <h3 className="text-lg font-semibold mb-2 text-slate-900">
+      Cart Items ({checkoutItems.length})
     </h3>
 
-    <div className="max-h-[250px] overflow-y-auto space-y-4">
-      {cartItems.map((item) => (
+    <div className="max-h-[250px] overflow-y-auto space-y-3">
+      {checkoutItems.map((item) => (
         <div
           key={item.id}
           className="flex gap-4 p-3 border border-gray-100 rounded-lg"
@@ -108,7 +109,7 @@ function Checkout(){
   <div className="border border-gray-200 rounded-xl p-3 bg-gray-50 space-y-3">
     <div className="flex justify-between text-gray-600">
       <span>Items</span>
-      <span>{cartItems.length}</span>
+      <span>{checkoutItems.length}</span>
     </div>
 
     <div className="flex justify-between text-gray-600">

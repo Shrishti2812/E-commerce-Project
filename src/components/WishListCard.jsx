@@ -6,10 +6,11 @@ function WishListCard({ item }) {
   const {wishListToggle,wishlist}=useContext(CartContext);
  const wishlisted = wishlist.some((product) => product.id === item.id);
   return (
-    <div className="bg-white shadow-md overflow-hidden hover:shadow-xl transition rounded-lg">
+   
+    <div className="bg-white shadow-md overflow-hidden hover:shadow-xl transition rounded-lg text-slate-900">
       <Link to={`/product/${item.id}`} className="cursor-pointer">
       {/* Image Section */}
-<div className="relative w-full h-56 bg-gray-200 flex items-center justify-center">
+<div className="relative w-full h-28 md:h-48 bg-gray-200 flex items-center justify-center">
   <img
     className="w-full h-full object-contain"
     src={item.thumbnail}
@@ -45,31 +46,31 @@ function WishListCard({ item }) {
       
 
       {/* Content Section */}
-      <div className="p-4 flex flex-col items-center text-center">
+      <div className=" flex flex-col items-center text-center">
         
-        <h2 className="flex items-center justify-center text-lg font-semibold line-clamp-2 h-14">
+        <h2 className="flex items-center justify-center text-sm md:text-lg font-semibold line-clamp-2 h-12">
           {item.title}
         </h2>
 
-        <p className="text-gray-600 mt-2 text-sm line-clamp-3">
+        <p className="text-gray-600  px-1 text-xs md:text-sm line-clamp-2">
           {item.description}
         </p>
 
-        <p className="text-xl font-bold text-green-600 mt-4">
+        <p className="text-md font-bold text-green-600 ">
           ${item.price.toFixed(2)}
         </p>
         </div>
 </Link>
         <div className="w-full flex justify-center">
         <button 
-          className="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+          className="w-full mt-2 px-4 py-1 md:py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
           onClick={() => addToCart(item)}
         >
           Add to Cart
         </button>
 </div>
- 
  </div>
+ 
   );
 }
 

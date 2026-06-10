@@ -14,13 +14,13 @@ function About() {
           </h1>
 
           <p className="text-gray-600 text-lg leading-relaxed">
-            Welcome to E-Shop, your one-stop destination for all your shopping
+            Welcome to ShopSphere, your one-stop destination for all your shopping
             needs. We are passionate about providing a smooth and enjoyable
             online shopping experience.
           </p>
 
           <p className="text-gray-600 text-lg leading-relaxed">
-            At E-Shop, we offer high-quality products at affordable prices,
+            At ShopSphere, we offer high-quality products at affordable prices,
             making shopping simple, convenient, and accessible for everyone.
           </p>
 
@@ -34,12 +34,12 @@ function About() {
 
         {/* Right Side */}
         <div>
-          <img
-            src= "https://images.unsplash.com/photo-1503602642458-232111445657?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8b25saW5lJTIwc2hvcHBpbmd8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60"
-            alt="About Us"
-            className="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover rounded-xl shadow-md"
-          />
-        </div>
+         <img
+  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80"
+  alt="About ShopSphere"
+  className="w-full h-[400px] object-cover rounded-2xl shadow-xl"
+/>
+</div>
       </section>
 
       {/* Features Section */}

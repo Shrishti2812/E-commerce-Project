@@ -26,10 +26,13 @@ if(!cartItems || cartItems.length===0){
  
 return(
     <>
-    <div className="min-h-screen bg-gray-100 text-slate-900">
-    <h1 className="text-2xl p-2">Your cart :</h1>
-    <div className="flex justify-center items-center w-full mx-auto md:p-4">
-        <div className="grid grid-cols-1 mx-auto w-full px-4 md:grid-cols-3 gap-6 ">
+    <div className="  px-0 md:px-8 bg-white mx-auto rounded-md shadow-sm min-h-screen text-slate-900">
+    <h1 className="text-3xl font-semibold text-gray-900 p-2 ">Your cart :</h1>
+     <p className="text-gray-600 mb-4 p-1">
+        {cartItems.length} items in your cart
+      </p>
+    <div className="flex justify-center items-center w-full  md:p-4">
+        <div className="grid grid-cols-1 mx-auto w-full md:px-4 md:grid-cols-3 gap-6 ">
             <div className="col-span-1 md:col-span-2 flex flex-col gap-4"> 
                 {cartItems.map((item)=>(
                     <CartItem key={item.id} item={item}/>

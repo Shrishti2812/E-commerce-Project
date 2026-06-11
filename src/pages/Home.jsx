@@ -19,12 +19,15 @@ const search =searchTerm.trim().toLowerCase()||" ";
   return matchSearch && matchCategory  ;
 });
    const productsRef=useRef();
+   const scrollToProducts = () => {
+     productsRef.current?.scrollIntoView({
+       behavior: "smooth",
+       block: "start"
+     });
+   };
     useEffect(()=>{
       if(searchTerm.trim()){
-        productsRef.current?.scrollIntoView({
-          behavior:"smooth",
-          block:"center"
-        })
+        scrollToProducts();
       }
     }, [searchTerm]);
   const sortedItems=[...filterItems].sort((a,b)=>{
@@ -82,7 +85,11 @@ fetchData();
             Explore thousands of products curated for quality, affordability, and everyday convenience.
           </p>
 
-          <button className="mt-8 px-6 py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition">
+          <button
+            type="button"
+            onClick={scrollToProducts}
+            className="mt-8 px-6 py-3 bg-black text-white rounded-xl hover:bg-gray-800 transition"
+          >
             Browse Products
           </button>
         </div>

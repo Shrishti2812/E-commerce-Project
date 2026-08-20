@@ -32,7 +32,7 @@ function Navbar({ searchTerm, setSearchTerm }) {
             <path strokeLinecap="round" strokeLinejoin="round"
               d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
           </svg>
-
+ 
           <input
             className="flex-1 min-w-0 p-1.5  md:p-2 text-sm rounded-full outline-none text-black bg-transparent"
             placeholder="Search products..."

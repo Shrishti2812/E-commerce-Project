@@ -1,6 +1,20 @@
 import { Link } from "react-router-dom";
-
+import { useState } from "react";
+import api from "../api/axios";
 function SignUp() {
+   const [name, setName] = useState("");
+ const [email, setEmail] = useState("");
+ const [password, setPassword] = useState("");
+
+ const handleSubmit=async (e)=>{
+  e.preventDefault();
+  try{
+    const res=await api.post("/user/signup",{name,email,password});
+    console.log(res.data)
+  }catch(err){
+    console.error(err);
+  }
+  }
   return (
     <main className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-8">
       <section className="w-full max-w-sm rounded-xl border border-slate-200 bg-white p-7 shadow-sm sm:p-8">
@@ -10,19 +24,19 @@ function SignUp() {
           <p className="mt-2 text-sm text-slate-500">Start your shopping journey today.</p>
         </header>
 
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
-              <label
-                htmlFor="username"
+              <label 
+                htmlFor="name" 
                 className="mb-1.5 block text-sm font-medium text-slate-700"
               >
-                Username
+                Name
               </label>
 
               <input
-                id="username"
+                id="name"
                 type="text"
-                placeholder="Your name"
+                placeholder="Your name" value={name} onChange={(e)=>setName(e.target.value)}
                 required
                 className="w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50"
               />
@@ -40,6 +54,7 @@ function SignUp() {
                 id="email"
                 type="email"
                 placeholder="you@example.com"
+                value={email} onChange={(e)=>setEmail(e.target.value)}
                 required
                 className="w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50"
               />
@@ -57,6 +72,7 @@ function SignUp() {
                 id="password"
                 type="password"
                 placeholder="Choose a password"
+                value={password} onChange={(e)=>setPassword(e.target.value)}
                 required
                 className="w-full rounded-lg border border-slate-300 px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-50"
               />

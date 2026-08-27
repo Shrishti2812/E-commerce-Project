@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import api from "../api/axios";
+import {useNavigate} from "react-router-dom";
 function SignUp() {
+  const navigate = useNavigate();
    const [name, setName] = useState("");
  const [email, setEmail] = useState("");
  const [password, setPassword] = useState("");
@@ -11,6 +13,7 @@ function SignUp() {
   try{
     const res=await api.post("/user/signup",{name,email,password});
     console.log(res.data)
+    navigate("/login");
   }catch(err){
     console.error(err);
   }

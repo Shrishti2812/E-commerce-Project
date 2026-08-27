@@ -3,8 +3,12 @@ import { useState,useEffect } from "react";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import {useNavigate} from "react-router-dom";
 function Product(){
         const {id}=useParams();
+        const {user}=useContext(AuthContext);
+        const navigate=useNavigate();
 const [singleProduct,setSingleProduct]=useState({});
 const {addToCart,wishlist,wishListToggle,setBuyNowItem}=useContext(CartContext);
 const wishlisted = wishlist.some((item) => item.id === singleProduct.id);
@@ -115,7 +119,14 @@ fetchData();
     <button
       className="px-5 py-2.5 bg-blue-600 text-white rounded-xl shadow-sm
       hover:bg-blue-500 hover:shadow-md transition-all duration-200"
-      onClick={() => addToCart(singleProduct)}
+      onClick={() => {
+    if (!user) {
+        navigate("/login");
+        return;
+    }
+
+   addToCart(singleProduct);
+}}
     >
       Add to Cart
     </button>

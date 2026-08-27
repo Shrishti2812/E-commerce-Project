@@ -2,6 +2,8 @@ import  { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
 function CartItem({ item }) {
+
+  console.log("CART ITEM:", item);
   const {
     increaseQuantity,
     decreaseQuantity,

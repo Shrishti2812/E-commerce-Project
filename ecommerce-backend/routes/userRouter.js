@@ -1,6 +1,18 @@
 const router = require('express').Router();
 
- const {registerUser,login}=require("../controllers/userController");
- router.post("/signup", registerUser);
- router.post("/login", login);
-module.exports=router;
+const { registerUser, login } = require("../controllers/userController");
+
+const authMiddleware = require("../middleware/authmiddleware");
+
+router.post("/signup", registerUser);
+
+router.post("/login", login);
+
+router.get("/me", authMiddleware, (req, res) => {
+    res.json({
+        message: "You are authenticated",
+        userId: req.user
+    });
+});
+
+module.exports = router;

@@ -1,12 +1,14 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import {useNavigate} from "react-router-dom";
 function Card({ product }){
  const {addToCart}=useContext(CartContext);
  const {wishListToggle,wishlist}=useContext(CartContext);
  const wishlisted = wishlist.some((item) => item.id === product.id);
-
-
+ const {user}=useContext(AuthContext);
+const navigate=useNavigate();
     return(
         <>
    
@@ -27,10 +29,16 @@ function Card({ product }){
       {/* Wishlist */}
       <button
         className="absolute top-3 right-3 flex items-center justify-center h-9 w-9 rounded-full bg-white shadow-sm border border-gray-200"
-        onClick={(e) => {
-          e.preventDefault();
-          wishListToggle(product);
-        }}
+            onClick={(e) => {
+    e.preventDefault();
+
+    if (!user) {
+        navigate("/login");
+        return;
+    }
+
+    wishListToggle(product);
+}}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +80,14 @@ function Card({ product }){
   {/* Footer */}
   <div className="px-2  ">
     <button
-      onClick={() => addToCart(product)}
+       onClick={() => {
+    if (!user) {
+        navigate("/login");
+        return;
+    }
+
+    addToCart(product) ;
+}}
       className="w-full rounded-xl bg-black py-2 text-sm font-medium text-white hover:bg-gray-800 transition"
     >
       Add to Cart

@@ -1,17 +1,26 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import api from "../api/axios";
-function Login() {
+import { useState,useContext  } from "react";
  
+import api from "../api/axios";
+import { useNavigate } from "react-router-dom";
+ import { AuthContext } from "../context/AuthContext";
+function Login() {
+  const navigate = useNavigate();
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
-  
+  const { loginUser } = useContext(AuthContext);
    const handleSubmit=async (e)=>{
     e.preventDefault();
     try{
-      const res=await api.post("/user/login",{email,password});
-      console.log(res.data)
-       localStorage.setItem("token", res.data.token);
+const res = await api.post("/user/login", { email, password });
+
+localStorage.setItem("token", res.data.token);
+
+const userRes = await api.get("/user/me");
+
+ 
+
+navigate("/");
     }catch(err){
       console.error(err);
     }

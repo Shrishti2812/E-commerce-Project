@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import Card from "../components/Card";
 import { useRef } from "react";
- 
+import api from "../api/axios";
 
 function Home({searchTerm, category, setCategory}){
     const [products,setProducts]=useState([]);
     const [sortOption, setSortOption] = useState("");
-   
+    
+
      const Categories=["all",...new Set(products.map((item)=>item.category ))];
  
  const filterItems= products.filter((item)=>{

@@ -47,11 +47,8 @@ const search =searchTerm.trim().toLowerCase()||" ";
   )
     async function fetchData() {
   try {
-    const response = await fetch('https://dummyjson.com/products');
-    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        const data = await response.json();
-   console.log(data);
-    setProducts(data.products);
+    const response = await api.get("/product");
+    setProducts(response.data);
   } catch (error) {
     console.error('Error:', error);
   }

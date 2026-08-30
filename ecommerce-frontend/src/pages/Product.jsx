@@ -5,6 +5,7 @@ import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import {useNavigate} from "react-router-dom";
+import api from "../api/axios";
 function Product(){
         const {id}=useParams();
         const {user}=useContext(AuthContext);
@@ -15,9 +16,8 @@ const wishlisted = wishlist.some((item) => item.id === singleProduct.id);
  const roundedRating = Math.round(singleProduct.rating);
     async function fetchData() {
   try {
-    const response = await fetch(`https://dummyjson.com/products/${id}`);
-    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        const data = await response.json();
+    const response = await api.get(`/product/${id}`);
+        const data = response.data;
         setSingleProduct(data);
      const roundedRating=Math.round(data.rating.rate)
    

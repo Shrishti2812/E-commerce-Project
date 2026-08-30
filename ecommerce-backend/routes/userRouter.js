@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const { registerUser, login } = require("../controllers/userController");
 
-const authMiddleware = require("../middleware/authmiddleware");
+const authMiddleware = require("../middleware/authMiddleware");
 
 router.post("/signup", registerUser);
 

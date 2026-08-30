@@ -7,11 +7,13 @@ const express=require("express");
 const app=express();
 app.use(cors());
 const userRoute=require("./routes/userRouter");
+const productRoute=require("./routes/productRouter");
 const PORT=process.env.PORT||8000;
 const connectDb=require("./config/db");
 connectDb();
 app.use(express.json());
 app.use("/user",userRoute);
+app.use("/product",productRoute);
 
 app.get('/',(req,res)=>{
     return res.send("Hello");

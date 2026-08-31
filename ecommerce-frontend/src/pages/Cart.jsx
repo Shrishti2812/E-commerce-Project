@@ -22,7 +22,10 @@ if(!cartItems || cartItems.length===0){
   </div>
 );
 }
- const total=cartItems.reduce((acc,item)=>acc+item.price * item.quantity,0);
+const total = cartItems.reduce(
+    (acc, item) => acc + item.product.price * item.quantity,
+    0
+);
  
 return(
     <>
@@ -35,7 +38,7 @@ return(
         <div className="grid grid-cols-1 mx-auto w-full md:px-4 md:grid-cols-3 gap-6 ">
             <div className="col-span-1 md:col-span-2 flex flex-col gap-4"> 
                 {cartItems.map((item)=>(
-                    <CartItem key={item.id} item={item}/>
+                    <CartItem key={item.product._id} item={item}/>
                 ))}
             </div>
          <div className="col-span-1 md:sticky md:top-5 h-fit rounded-2xl mb-4 bg-white shadow-lg border-b border-t border-gray-300 p-6">

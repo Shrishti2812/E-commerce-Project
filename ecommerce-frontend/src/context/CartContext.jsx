@@ -5,10 +5,7 @@ export const CartContext = createContext();
 export function CartProvider({ children }) {
     const [cartItems, setCartItems] = useState([]);
     const [buyNowItem, setBuyNowItem] = useState(null);
-    const [wishlist, setWishlist] = useState(()=>{
-     const savedWishList=localStorage.getItem("wishlist");
-     return savedWishList ? JSON.parse(savedWishList) : [];   
-    });
+const [wishlist, setWishlist] = useState([]);
     useEffect(()=>{
         localStorage.setItem("wishlist", JSON.stringify(wishlist));
     }, [wishlist]);
@@ -17,31 +14,47 @@ export function CartProvider({ children }) {
         const token = localStorage.getItem("token");
         if(token){
             getCartItems();
+             getWishListItems();
         }
     }, []);
 
-    
+    const getWishListItems=async ()=>{
+        const response=await api.get("/wishlist");
 
+    console.log("WISHLIST RESPONSE:", response.data);
+        setWishlist(response.data.products);
+    
+    }
+
+     
   const getCartItems = async () => {
     const response = await api.get("/cart");
-
-    console.log("CART RESPONSE:", response.data);
-
+ 
     setCartItems(response.data.items);
 };
     const addToCart = async(product) => {
     const response = await api.post("/cart/add", { productId: product._id })
         setCartItems(response.data.items);
     }
-    const wishListToggle = (product) => {
-        const exists = wishlist.some((item) => item.id === product.id);
-        if (exists) {
-            setWishlist(prev => prev.filter((item) => item.id !== product.id));
-        } else {
-            setWishlist(prev => [...prev, product]);
-        }
+   const wishListToggle = async (product) => {
+    const exists = wishlist.some(
+        item => item._id === product._id
+    );
+
+    if (exists) {
+        const response = await api.delete("/wishlist/remove", {
+            data: { productId: product._id }
+        });
+
+        setWishlist(response.data.products);
+    } else {
+        const response = await api.post("/wishlist/add", {
+            productId: product._id
+        });
+
+        setWishlist(response.data.products);
     }
-    console.log(wishlist);
+};
 
     const increaseQuantity = async (id,quantity) => {
         const newquantity=quantity+1;

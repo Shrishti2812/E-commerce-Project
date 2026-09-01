@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 function Card({ product }){
  const {addToCart}=useContext(CartContext);
  const {wishListToggle,wishlist}=useContext(CartContext);
- const wishlisted = wishlist.some((item) => item.id === product.id);
+ const wishlisted = wishlist.some((item) => item._id === product._id);
  const {user}=useContext(AuthContext);
 const navigate=useNavigate();
     return(

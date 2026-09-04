@@ -10,7 +10,7 @@ import Wishlist from "./pages/Wishlist";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import SignUp from "./pages/Signup";
-
+import Order from "./pages/Order";
 import { Routes, Route } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import ProtectedRoute from "./components/ProtectedRoutes";
@@ -84,6 +84,7 @@ function App() {
           }
         />
 
+        <Route path="/order" element={<Order />} />
       </Routes>
 
       <Footer />

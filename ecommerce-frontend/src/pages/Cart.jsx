@@ -63,7 +63,7 @@ return(
 
     <div className="flex justify-between">
       <span>Delivery</span>
-      <span>$1.00</span>
+      <span>$1.01</span>
     </div>
 
     {/* Divider */}

@@ -10,6 +10,7 @@ const userRoute=require("./routes/userRouter");
 const productRoute=require("./routes/productRouter");
 const cartRoute=require("./routes/cartRouter");
 const wishlistRoute=require("./routes/wishlistRouter");
+const orderRoute=require("./routes/orderRouter");
 const PORT=process.env.PORT||8000;
 const connectDb=require("./config/db");
 connectDb();
@@ -18,7 +19,7 @@ app.use("/user",userRoute);
 app.use("/product",productRoute);
 app.use("/cart",cartRoute);
 app.use("/wishlist",wishlistRoute);
- 
+ app.use("/order",orderRoute);
 
 app.get('/',(req,res)=>{
     return res.send("Hello");

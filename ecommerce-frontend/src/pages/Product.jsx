@@ -134,10 +134,13 @@ fetchData();
     <button
       className="px-5 py-2.5 bg-white text-gray-900 border border-gray-300 rounded-xl
       hover:bg-gray-100 transition"
-      onClick={() => {
-        setBuyNowItem(singleProduct);
-       
-      }}
+    onClick={() => {
+    setBuyNowItem({
+        product: singleProduct,
+        quantity: 1
+    });
+    
+}}
     >
       Buy Now
     </button>

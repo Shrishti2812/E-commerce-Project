@@ -1,12 +1,56 @@
-import{Link} from "react-router-dom";
-        import { useContext } from "react";
+ 
+        import { useContext,useState } from "react";
         import { CartContext } from "../context/CartContext";
         import CartItem from "../components/CartItem";
+        import api from "../api/axios";
 function Checkout(){
 
     const {cartItems, buyNowItem}=useContext(CartContext);
     const checkoutItems=buyNowItem ? [buyNowItem] : cartItems;
-    const total=checkoutItems.reduce((acc,item)=>acc+item.price * (item.quantity||1),0);
+    const [shippingAddress, setShippingAddress] = useState({
+    fullName: "",
+    email: "",
+    address: "",
+    city: "",
+    postalCode: ""
+});
+const [paymentMethod, setPaymentMethod] = useState("");
+const handlePlaceOrder = async () => {
+    console.log("checkoutItems:", checkoutItems);
+    console.log("buyNowItem:", buyNowItem);
+    console.log("cartItems:", cartItems);
+
+    if (
+        !shippingAddress.fullName ||
+        !shippingAddress.email ||
+        !shippingAddress.address ||
+        !shippingAddress.city ||
+        !shippingAddress.postalCode ||
+        !paymentMethod
+    ) {
+        alert("Please fill in all required fields.");
+        return;
+    }
+
+    try {
+        const response = await api.post("/order/create", {
+            items: checkoutItems,
+            shippingAddress,
+            paymentMethod,
+            isBuyNow: !!buyNowItem
+        });
+
+        console.log("ORDER RESPONSE:", response.data);
+
+        alert("Order placed successfully!");
+
+    } catch (error) {
+        console.error("ORDER ERROR:", error);
+        console.error("ERROR DATA:", error.response?.data);
+    }
+};
+ 
+    const total=checkoutItems.reduce((acc,item)=>acc+item.product.price * (item.quantity||1),0);
     return (
         <>
        <div className="min-h-screen bg-gray-100 text-slate-900 ">
@@ -22,29 +66,39 @@ function Checkout(){
       <label className="block text-gray-700 font-medium mb-2">
         Full Name
       </label>
-      <input type="text" placeholder="Full Name"
+      <input type="text" placeholder="Full Name" required value={shippingAddress.fullName} 
+      onChange={(e) => setShippingAddress({ ...shippingAddress, fullName: e.target.value })}
         className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black mb-4"
       />
 
       <label className="block text-gray-700 font-medium mb-2">Email Address</label>
       <input
-        type="email"
+        type="email" value={shippingAddress.email} required
+        onChange={(e) => setShippingAddress({ ...shippingAddress, email: e.target.value })}
         placeholder="Email Address"
         className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black mb-4"
       />
  
       <label className="block text-gray-700 font-medium mb-2">Shipping Address</label>
-      <input   type="text"       placeholder="Shipping Address"
+      <input   type="text"  required     placeholder="Shipping Address"   value={shippingAddress.address}
+  onChange={(e) =>
+    setShippingAddress({
+      ...shippingAddress,
+      address: e.target.value
+    })
+  }
         className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black mb-4"
       />
 
       <label className="block text-gray-700 font-medium mb-2">City   </label>
-      <input   type="text"     placeholder="City"
+      <input   type="text"   required  placeholder="City" value={shippingAddress.city}
+        onChange={(e) => setShippingAddress({ ...shippingAddress, city: e.target.value })}
         className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black mb-4"
  />
  
       <label className="block text-gray-700 font-medium mb-2">  Postal Code    </label>
-      <input      type="text"   placeholder="Postal Code"
+      <input      type="text" required  placeholder="Postal Code" value={shippingAddress.postalCode}
+        onChange={(e) => setShippingAddress({ ...shippingAddress, postalCode: e.target.value })}
         className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-black mb-4"
       />
 
@@ -53,15 +107,23 @@ function Checkout(){
 
       <div className="flex justify-between mb-6">
         <label className="flex items-center gap-3">
-          <input type="radio" name="payment" className="form-radio text-black" />
+          <input type="radio" name="payment" required className="form-radio text-black"  value="card"
+    checked={paymentMethod === "card"}
+    onChange={(e) => setPaymentMethod(e.target.value)} />
           <span className="text-gray-700">Credit/Debit Card</span>
         </label>
+
         <label className="flex items-center gap-3">
-          <input type="radio" name="payment" className="form-radio text-black" />
+          <input type="radio" name="payment" required className="form-radio text-black"  value="upi"
+    checked={paymentMethod === "upi"}
+    onChange={(e) => setPaymentMethod(e.target.value)}/>
           <span className="text-gray-700">UPI</span>
         </label>
+
         <label className="flex items-center gap-3">
-          <input type="radio" name="payment" className="form-radio text-black" />
+          <input type="radio" name="payment" required className="form-radio text-black"  value="cod"
+    checked={paymentMethod === "cod"}
+    onChange={(e) => setPaymentMethod(e.target.value)} />
           <span className="text-gray-700">Cash on Delivery</span>
         </label>
       </div>
@@ -80,24 +142,24 @@ function Checkout(){
     <div className="max-h-[250px] overflow-y-auto space-y-3">
       {checkoutItems.map((item) => (
         <div
-          key={item.id}
+          key={item.product._id}
           className="flex gap-4 p-3 border border-gray-100 rounded-lg"
         >
           <div className="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center">
             <img
-              src={item.thumbnail}
-              alt={item.title}
+              src={item.product.thumbnail}
+              alt={item.product.title}
               className="w-full h-full object-contain"
             />
           </div>
 
           <div className="flex-1">
             <h4 className="font-medium text-gray-900 line-clamp-2">
-              {item.title}
+              {item.product.title}
             </h4>
 
             <div className="mt-2 text-sm text-gray-600 space-y-1">
-              <p>Price: ${item.price.toFixed(2)}</p>
+              <p>Price: ${item.product.price.toFixed(2)}</p>
               <p>Qty: {item.quantity}</p>
             </div>
           </div>
@@ -127,7 +189,8 @@ function Checkout(){
       <span>${(total + 1).toFixed(2)}</span>
     </div>
   </div>
- <button className="w-full bg-black text-white py-2 rounded-lg text-xl font-semibold hover:bg-gray-800 transition">
+ <button onClick={handlePlaceOrder}
+  className="w-full bg-black text-white py-2 rounded-lg text-xl font-semibold hover:bg-gray-800 transition">
     Place Order
   </button>
 </div>

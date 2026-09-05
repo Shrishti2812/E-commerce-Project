@@ -1,4 +1,4 @@
- 
+ import {Link} from "react-router-dom";
 function OrderCard({ order }) {
   return (
     <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
@@ -85,12 +85,12 @@ function OrderCard({ order }) {
           </p>
         </div>
 
-        <button
+    <Link to={`/order/${order._id}`}>  <button
           className="px-4 py-2 text-sm font-medium bg-blue-500 text-white rounded-lg
                      hover:bg-blue-600 transition"
         >
           View Details
-        </button>
+        </button></Link>  
 
       </div>
 

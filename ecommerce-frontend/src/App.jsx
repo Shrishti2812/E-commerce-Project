@@ -14,6 +14,7 @@ import Order from "./pages/Order";
 import { Routes, Route } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import ProtectedRoute from "./components/ProtectedRoutes";
+import OrderDetails from "./components/OrderDetails";
 
 function App() {
 
@@ -84,7 +85,24 @@ function App() {
           }
         />
 
-        <Route path="/order" element={<Order />} />
+<Route
+          path="/order"
+          element={
+            <ProtectedRoute>
+              <Order />
+            </ProtectedRoute>
+          }
+        />
+
+<Route
+          path="/order/:id"
+          element={
+            <ProtectedRoute>
+              <OrderDetails/>
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
 
       <Footer />

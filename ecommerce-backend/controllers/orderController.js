@@ -72,4 +72,15 @@ const getMyOrders = async (req, res) => {
         res.status(500).json({ message: "Server error",error: error.message });
     }
 };
-module.exports={createOrder,getMyOrders};
+const getOrderById=async (req,res)=>{
+    try{
+        const id=req.params.id;
+        const user=req.user;
+        const order=await Order.findById(id,user);
+        if(!order)return res.status(404).json({message:"Order not found"});
+         res.status(200).json(order);
+    }catch(error){
+        res.status(500).json({message:"Failed to fetch order"});
+    }
+}
+module.exports={createOrder,getMyOrders,getOrderById};

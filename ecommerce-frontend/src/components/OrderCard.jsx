@@ -1,5 +1,6 @@
  import {Link} from "react-router-dom";
 function OrderCard({ order }) {
+   
   return (
     <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
 
@@ -54,13 +55,13 @@ function OrderCard({ order }) {
                 </h4>
 
                 <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
-                  <p>₹{item.price}</p>
+                  <p>${item.price}</p>
                   <span>×</span>
                   <p>{item.quantity}</p>
                 </div>
 
                 <p className="text-sm font-medium text-gray-800 mt-1">
-                  ₹{(item.price * item.quantity).toFixed(2)}
+                  ${(item.price * item.quantity).toFixed(2)}
                 </p>
 
               </div>
@@ -81,7 +82,7 @@ function OrderCard({ order }) {
           </p>
 
           <p className="text-lg font-bold text-gray-900">
-            ₹{order.totalPrice.toFixed(2)}
+            ${order.totalPrice.toFixed(2)}
           </p>
         </div>
 

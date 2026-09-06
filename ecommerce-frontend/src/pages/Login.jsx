@@ -8,23 +8,27 @@ function Login() {
   const navigate = useNavigate();
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
-  const { loginUser } = useContext(AuthContext);
-   const handleSubmit=async (e)=>{
-    e.preventDefault();
-    try{
-const res = await api.post("/user/login", { email, password });
+   const[error,setError]=useState(null);
 
-localStorage.setItem("token", res.data.token);
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError(null);
 
-const userRes = await api.get("/user/me");
+  try {
+    const res = await api.post("/user/login", { email, password });
+
+    localStorage.setItem("token", res.data.token);
+
+    const userRes = await api.get("/user/me");
 
  
 
-navigate("/");
-    }catch(err){
-      console.error(err);
-    }
-    }
+    navigate("/");
+  }   catch (err) {
+  console.log("CATCH BLOCK RAN", err);
+  setError(err.response?.data?.message || "Something went wrong");
+}
+};
   return (
     <main className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-8">
       <section className="w-full max-w-sm rounded-xl border border-slate-200 bg-white p-7 shadow-sm sm:p-8">
@@ -35,6 +39,11 @@ navigate("/");
         </header>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {error && (
+  <p className="text-sm text-red-500">
+    {error}
+  </p>
+)}
             <div>
               <label
                 htmlFor="email"

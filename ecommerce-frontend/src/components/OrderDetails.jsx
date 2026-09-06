@@ -120,11 +120,11 @@ return (
                 </h4>
 
                 <p className="text-sm text-gray-500 mt-1">
-                  ₹{item.price} × {item.quantity}
+                  ${item.price} × {item.quantity}
                 </p>
 
                 <p className="text-sm font-semibold text-gray-900 mt-1">
-                  ₹{(item.price * item.quantity).toFixed(2)}
+                  ${(item.price * item.quantity).toFixed(2)}
                 </p>
 
               </div>
@@ -169,7 +169,7 @@ return (
               Total Price
             </span>
             <span className="font-bold">
-              ₹{order.totalPrice.toFixed(2)}
+              ${order.totalPrice.toFixed(2)}
             </span>
           </div>
 

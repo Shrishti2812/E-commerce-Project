@@ -7,7 +7,7 @@ function SignUp() {
    const [name, setName] = useState("");
  const [email, setEmail] = useState("");
  const [password, setPassword] = useState("");
-
+const [error, setError] = useState(null);
  const handleSubmit=async (e)=>{
   e.preventDefault();
   try{
@@ -15,7 +15,7 @@ function SignUp() {
     console.log(res.data)
     navigate("/login");
   }catch(err){
-    console.error(err);
+   setError(err.response?.data?.message || "Something went wrong");
   }
   }
   return (
@@ -28,6 +28,11 @@ function SignUp() {
         </header>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
+          {error && (
+            <p className="text-sm text-red-500">
+              {error}
+            </p>
+          )}
             <div>
               <label 
                 htmlFor="name" 
